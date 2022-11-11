@@ -37,6 +37,17 @@ end
 
 local M = {}
 
+local function filter_servers_to_install(servers)
+  local filtered_servers = {}
+  for server, config in pairs(servers) do
+    if config.ensure_installed ~= false then
+      table.insert(filtered_servers, server)
+    end
+  end
+
+  return filtered_servers;
+end
+
 function M.setup(opts)
   opts = vim.tbl_deep_extend('keep', opts, {
     default_mappings = true,
@@ -55,7 +66,7 @@ function M.setup(opts)
     require('mason').setup()
   end
   require('mason-lspconfig').setup({
-    --ensure_installed = _.keys(opts.servers),
+    ensure_installed = filter_servers_to_install(opts.servers),
   })
   require('mason-lspconfig').setup_handlers({
     function(server_name)
