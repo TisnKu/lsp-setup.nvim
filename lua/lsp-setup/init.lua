@@ -71,13 +71,16 @@ function M.setup(opts)
   require('mason-lspconfig').setup_handlers({
     function(server_name)
       local config = servers[server_name] or {}
-      local ok, coq = pcall(require, 'coq')
-      if ok then
-        config = coq.lsp_ensure_capabilities(config)
-      end
       require('lspconfig')[server_name].setup(config)
     end
   })
+
+  -- setup servers that are not ensure_installed
+  for server, config in pairs(servers) do
+    if config.ensure_installed == false then
+      require('lspconfig')[server].setup(config)
+    end
+  end
 end
 
 return M
