@@ -126,6 +126,10 @@ function M.setup(opts)
       mason.setup()
     end
     mason_lspconfig.setup({
+      registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      },
       ensure_installed = utils.get_keys(opts.servers),
       automatic_enable = false,
     })
