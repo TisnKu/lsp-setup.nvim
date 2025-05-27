@@ -20,18 +20,12 @@ A simple wrapper for [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) 
     'mason-org/mason.nvim', -- optional
     'mason-org/mason-lspconfig.nvim', -- optional
   },
-}
-```
-
-### [packer.nvim](https://github.com/wbthomason/packer.nvim)
-
-```lua
-use {
-  'junnplus/lsp-setup.nvim',
-  requires = {
-    'neovim/nvim-lspconfig',
-    'mason-org/mason.nvim', -- optional
-    'mason-org/mason-lspconfig.nvim', -- optional
+  ---@type LspSetup.Options
+  opts = {
+    servers = {
+      pylsp = {},
+      clangd = {}
+    }
   }
 }
 ```
@@ -268,19 +262,18 @@ require('lsp-setup').setup({
 ```lua
 require('lsp-setup').setup({
   -- Default mappings
-  -- gD = 'lua vim.lsp.buf.declaration()',
-  -- gd = 'lua vim.lsp.buf.definition()',
-  -- gt = 'lua vim.lsp.buf.type_definition()',
-  -- gi = 'lua vim.lsp.buf.implementation()',
-  -- gr = 'lua vim.lsp.buf.references()',
-  -- K = 'lua vim.lsp.buf.hover()',
-  -- ['<C-k>'] = 'lua vim.lsp.buf.signature_help()',
-  -- ['<space>rn'] = 'lua vim.lsp.buf.rename()',
-  -- ['<space>ca'] = 'lua vim.lsp.buf.code_action()',
-  -- ['<space>f'] = 'lua vim.lsp.buf.formatting()',
-  -- ['<space>e'] = 'lua vim.diagnostic.open_float()',
-  -- ['[d'] = 'lua vim.diagnostic.goto_prev()',
-  -- [']d'] = 'lua vim.diagnostic.goto_next()',
+  -- gD = { cmd = vim.lsp.buf.declaration, opts = { desc = 'Go To Declaration' } },
+  -- gd = { cmd = vim.lsp.buf.definition, opts = { desc = 'Go To Definition' } },
+  -- gi = { cmd = vim.lsp.buf.implementation, opts = { desc = 'Go To Implementation' } },
+  -- gr = { cmd = vim.lsp.buf.references, opts = { desc = 'Go To References' } },
+  -- K = { cmd = vim.lsp.buf.hover, opts = { desc = 'Hover' } },
+  -- ['<C-k>'] = { cmd = vim.lsp.buf.signature_help, opts = { desc = 'Show Signature Help' } },
+  -- ['<space>rn'] = { cmd = vim.lsp.buf.rename, opts = { desc = 'Rename' } },
+  -- ['<space>ca'] = { cmd = vim.lsp.buf.code_action, opts = { desc = 'Code Action' } },
+  -- ['<space>f'] = { cmd = vim.lsp.buf.formatting, opts = { desc = 'Format' } },
+  -- ['<space>e'] = { cmd = vim.diagnostic.open_float, opts = { desc = 'Show Diagnostics' } },
+  -- ['[d'] = { cmd = function() vim.diagnostic.jump({ count = -1, float = true }) end, opts = { desc = 'Prev Diagnostic' } },
+  -- [']d'] = { cmd = function() vim.diagnostic.jump({ count = 1, float = true }) end, opts = { desc = 'Next Diagnostic' } },
   default_mappings = true,
   -- Custom mappings, will overwrite the default mappings for the same key
   -- Example mappings for telescope pickers:
@@ -324,7 +317,7 @@ require('lsp-setup').setup({
 
 ## Integrations
 
-### [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) or [coq_nvim](https://github.com/ms-jpq/coq_nvim)
+### [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) or [coq_nvim](https://github.com/ms-jpq/coq_nvim) or [blink.cmp](https://github.com/Saghen/blink.cmp)
 
 If installed, will auto advertise capabilities to LSP servers.
 
